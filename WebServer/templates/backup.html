@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spell Check</title>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+</head>
+<body>
+<h1>Sentiment and Emoji</h1>
+Using TextBlob to find sentiment of an input sentence. Then use <a href="http://kt.ijs.si/data/Emoji_sentiment_ranking/index.html">Emojo Sentiment</a> to find the
+closet emoji.
+<br>
+<br>
+
+<form id="sentiment" url="http://localhost:7000/sen_emo" onsubmit="return false;">
+    Sentence:
+    <input name="word">
+    <input type="submit" value="Check">
+</form>
+<div id="result"></div>
+
+<script>
+    $("#sentiment").submit(function(event) {
+
+                /* stop form from submitting normally */
+                event.preventDefault();
+
+                /* get some values from elements on the page: */
+                var $form = $(this),
+                    term = $form.find('input[name="word"]').val(),
+                    url = $form.attr('url');
+
+                var markers = {"sentence": term};
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+
+                    data: JSON.stringify(markers),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    crossDomain: true,
+                    /*processData: false,*/
+                    complete: function(data){
+                        var tmp = JSON.stringify(data);
+                    },
+                    success: function(data){
+                        alert("got the data"+data);
+                    },
+                    fail: function(errMsg) {
+                        alert(errMsg);
+                    },
+                    error: function(req, textStatus, err){
+
+                        var tmp = JSON.stringify(req);
+                    },
+                    done: function(data){
+                        var tmp = data;
+                    }
+                });
+
+                return false;
+            });
+</script>
+<br>
+<br>
+<h2>Result</h2>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sentiment Emoji</title>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+</head>
+<body>
+<h1>Sentiment Emoji</h1>
+    <p>
+    Using TextBlob to find sentiment of an input sentence. Then use <a href="http://kt.ijs.si/data/Emoji_sentiment_ranking/index.html">Emojo Sentiment</a>
+    to find the closest emoji.
+    </p>
+<br>
+<br>
+
+    Sentence:
+    <input name="word" id="input">
+    <input type="button" value="Check" url="http://localhost:7000/sen_emo" onclick="check(this);">
+
+
+<script>
+    function check(button){
+
+                /* stop form from submitting normally */
+                /* button.preventDefault(); */
+                var term = document.getElementById("input").value;
+                /* get some values from elements on the page: */
+                var url = button.getAttribute("url");
+
+                var markers = {"sentence": term};
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+
+                    data: JSON.stringify(markers),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    crossDomain: true,
+                    /*processData: false,*/
+                    complete: function(data){
+                        var tmp = JSON.stringify(data);
+                    },
+                    success: function(data){
+                        var emoji = parseInt(data.emojo);
+                        document.getElementById("result").innerHTML = data.sentence + "; polarity: " + data.polarity + " " + String.fromCodePoint(emoji);
+                    },
+                    fail: function(errMsg) {
+                        alert(errMsg);
+                    },
+                    error: function(req, textStatus, err){
+
+                        var tmp = JSON.stringify(req);
+                    },
+                    done: function(data){
+                        var tmp = data;
+                    }
+                });
+
+                return false;
+            };
+</script>
+<br>
+<br>
+<h2>Result</h2>
+<div id="test"></div>
+<div id="result"></div>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+</body>
+</html>
