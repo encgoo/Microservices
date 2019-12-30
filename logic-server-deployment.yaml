@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logic-server
+  labels:
+    app: logic-server
+spec:
+  selector:
+     matchLabels:
+       app: logic-server
+  replicas: 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: logic-server
+    spec:
+      containers:
+        - image: sentiment-logic
+          imagePullPolicy: Never
+          name: logic-server
+          ports:
+            - containerPort: 5000
