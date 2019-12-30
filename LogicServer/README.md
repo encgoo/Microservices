@@ -1,8 +1,8 @@
 # Logic Server
 
-This is a Flask server that do the following logics:
+This is a Flask server that do the following logic:
 * Given a sentence, compute its polarity
-* Given a polarity, firnd the closest emoji
+* Given a polarity, find the closest emoji
 
 # Run as standalone
 Run
@@ -19,9 +19,14 @@ Use the curl commands in this [folder](curl_test)
 Use 
 
 ```docker build -t sentiment-logc .```
+
 _Note_: In the [Dockerfile](Dockerfile), we install
 textblob, and also run a python command to download 
 textblob corpora.
+
+On CentOS, use
+
+```docker build --network=host -t sentiment-logic .```
 
 ## Run
 Run
@@ -46,3 +51,6 @@ In our example, the docker is running on 172.17.0.2
 This is the information we need to use when
 we start the container for the [ApiServer](../ApiServer/README.md).
 
+Use this to stop the container:
+
+```docker stop _container_id```
