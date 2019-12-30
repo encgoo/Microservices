@@ -39,3 +39,11 @@ Use this curl command to verify.
 
 ```curl -X POST -H "Content-Type: application/json" http://localhost:7000/sen_emo -d '{"sentence":"Mary has a little lamb"}'```
 
+### Stop containers
+Use
+
+```docker ps | grep sentiment``` 
+
+to find the container ids. Then 
+
+```docker stop _container_id_```
