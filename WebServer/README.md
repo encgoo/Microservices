@@ -15,6 +15,9 @@ Use http://localhost:9000/emo_sen to access the web service.
 Run
 
 ```docker build -t sentiment-web .```
+On CentOS use:
+
+```docker build --network=host -t sentiment-api .```
 
 _Note_ because we are going to run minkube, so we keep all the docker images local.
 

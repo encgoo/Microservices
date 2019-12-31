@@ -30,22 +30,94 @@ These microservices were designed following the [Twelve-factor methodology](http
 Minikube is used to create local Kubernetes cluster. This POC runs on Debian 9 VM. Refer to [Minikube](../Kubernetes/README.md) for
 instruction on installing minikube on Debian 9 VM. 
 
+Or follow this [link](https://vocon-it.com/2018/11/19/single-node-kubernetes-cluster-1-installing-minikube-on-centos/) to install
+minikube on CentOS 8. _Note_: Use minikube v0.30.0. The latest one might not work.
+
 Run this to make sure everything is working first.
 
 * Start minicube
 
     ```sudo -E minikube start --vm-driver=none```
+    
+    * use ```sudo minikube delete``` to clean up first if necessary.
 * check kube system services
 
     ```kubectl get services -n kube-systemn```
 ### kubectl
-This is installed together with minikube above.
+This is installed together with minikube above. 
 
 ### docker
 
 ### python
 All the source codes are developed using python.
 
-   
+### socat
+For CentOS, you might need to install socat first
+
+```sudo yum install -y socat```
+
 ## Steps
-These are the steps to use
+These are the steps to use. There are several ways to start a container.
+
+* Start containers as pods:
+
+    ```sudo /usr/local/bin/kubectl create -f web-server-pod.yaml```
+    * Use this to check pod
+    ```sudo /usr/local/bin/kubectl get pods```
+    It shall show web-server STATUS as running. 
+    
+    * Forward a port to the pod
+    
+    ```sudo /usr/local/bin/kubectl port-forward web-server 9000:9000```
+    
+    If everything works fine, you can now use a browser to access
+    http://localhost;9000/emo_sen
+    * Use this to delete a pod, because we will use services
+    
+    ```sudo /usr/local/bin/kubectl delete pod _pod_name_```
+
+* Start containers as deployments and services
+    * Start the logic-server as a service:
+        * Start as a deployment
+        
+            ```sudo /usr/local/bin/kubectl apply -f logic-server-deployment.yam```
+    
+        * Use 
+    
+            ```sudo /usr/local/bin/kubectl get pods```
+    
+            to check. There shall be two pods
+            ![screenshot](images/deployment_logic.png)
+    
+        * Start up a service
+    
+            ```sudo kubectl apply -f logic-server-service.yaml```
+    
+        * check the service, and find the IP to use
+    
+            ```sudo kubectl get services```
+    
+            ![screenshot](images/logic-server-service.png)
+            Use curl to verify this deployment
+    
+            ```curl -X POST -H "Content-Type: application/json" http://10.108.97.133:5050/sentiment -d '{"sentence": "Mary has a little lamb"}'```
+    
+            Again you might need to run this for the IP to work
+   
+            ```sudo minikube service logic-server --url```
+    * Start the api-server as a service
+        * Start a deployment
+        
+            ```sudo kubectl apply -f api-server-deployment.yaml```
+        
+        * Check pods
+        
+            ```sudo kubectl get pods```
+        
+            Now there shall be 4 pods. 
+        
+        * Start a service    
+        
+            ```sudo kubectl apply -f api-server-service.yaml```    
+    
+        * Check services, and find the IP to use
