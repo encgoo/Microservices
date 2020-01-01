@@ -18,7 +18,7 @@ _Note_: instead of using node.js as in that post above, we will use python for a
 ## Architecture
 
 This POC contains these three services:
-![finalpoc](images/FinalPoc.png)
+
 * Presentation: A python flask server (called web-server here) that returns a _static_ HTML file as shown above. 
 The [HTML file](WebServer/templates/sentiment.html) contains
 javascript code that uses AJAX to communicate with the api-server below. This javascript code is 
