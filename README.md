@@ -16,13 +16,18 @@ _Note_: instead of using node.js as in that post above, we will use python for a
 ## Architecture
 
 This POC contains these three services:
-* Presentation: A python flask server (WebServer) that returns a _static_ HTML file. The [HTML file](WebServer/templates/sentiment.html) contains
-javascript code that uses AJAX to communicate with the ApiServer below.
-* Application integration: A python flask server (ApiServer) that manages the RESTful API.
-* Business Logic: A python flask server (LogicServer) that do the following logics:
+![finalpoc](images/FinalPoc.png)
+* Presentation: A python flask server (called web-server here) that returns a _static_ HTML file as shown above. 
+The [HTML file](WebServer/templates/sentiment.html) contains
+javascript code that uses AJAX to communicate with the api-server below. This javascript code is 
+activated when the "Check" button is clicked.
+* Application integration: A python flask server (called api-server here) that manages the RESTful API. It handles
+the POST request from the web-server, process the data and forward it to the logic-server below.
+* Business Logic: A python flask server (logic-server) that do the following logics:
     * Given a sentence, use python textbloc to find its polarity (same as the post above)
     * Given a polarity, find the emoji that has the closest polarity (something new/interesting we add)
-    
+
+![archi](images/Microservices.png)    
 These microservices were designed following the [Twelve-factor methodology](https://www.12factor.net/) as recommended by the IBM course above.
 
 ## Prerequites
