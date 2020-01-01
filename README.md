@@ -11,6 +11,8 @@ As a followup of this IBM course, this is a POC built using microservices, follo
 this [post](https://www.freecodecamp.org/news/learn-kubernetes-in-under-3-hours-a-detailed-guide-to-orchestrating-containers-114ff420e882/). It
 demos how to use Kubernetes to manage/connect microservices. 
 
+[![video](images/video.png)](https://youtu.be/wNShvByNreQ)
+
 _Note_: instead of using node.js as in that post above, we will use python for all microservices in this POC.
 
 ## Architecture
