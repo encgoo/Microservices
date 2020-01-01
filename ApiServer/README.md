@@ -47,3 +47,14 @@ Use
 to find the container ids. Then 
 
 ```docker stop _container_id_```
+
+Use 
+```docker rm _container_id_```
+
+to remove unused container
+
+Then use
+
+```docker rmi _image_name_```
+
+to remove unused image

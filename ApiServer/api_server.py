@@ -14,7 +14,7 @@ logging.basicConfig(filename="api_server.log", level=logging.DEBUG)
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 
-LOGIC_SERVER = os.environ.get("LOGIC_SERVER", "http://localhost:5000")
+LOGIC_SERVER = "http://" + os.environ.get("LOGIC_SERVER_SERVICE_HOST", "localhost") + ":5050"
 
 #
 #   Use env_var to find the other services?
@@ -26,7 +26,7 @@ def sen_emo():
         #
         # Support CORS preflight
         #
-        logging.DEBUG("OPTIONS call.")
+        logging.debug("OPTIONS call.")
         resp = Response("")
         resp.headers['Access-Control-Allow-Origin'] = '*'
         resp.headers['Access-Control-Allow-Methods'] = "POST"

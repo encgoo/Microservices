@@ -57,7 +57,10 @@ For CentOS, you might need to install socat first
 ```sudo yum install -y socat```
 
 ## Steps
-These are the steps to use. There are several ways to start a container.
+These are the steps to use. Note here we are going to start the
+api server and logic server as deployments and then services.
+
+The web server is started as a pod.
 
 * Start containers as pods:
 
@@ -114,10 +117,33 @@ These are the steps to use. There are several ways to start a container.
         
             ```sudo kubectl get pods```
         
-            Now there shall be 4 pods. 
+            Now there shall be 3 pods. 
         
         * Start a service    
         
             ```sudo kubectl apply -f api-server-service.yaml```    
     
         * Check services, and find the IP to use
+        
+            ```sudo kubectl get svc```
+            ![screenshot](images/api_service.png)
+            
+            Our example here shows the IP address is 10.102.14.247:7000
+        * Use this curl command to check the whole thing works
+        
+            ```curl -X POST -H "Content-Type: application/json" http://10.102.14.247:7000/sen_emo -d '{"sentence":"Mary has a litle lamb"}'``` 
+        
+            _NOTE_ because the api server is a map of the localhost, so this can be
+            done as http://localhost:7000 as well.
+
+If everything works, this is what you will see:
+![finalpoc](images/FinalPoc.png)
+            
+## Appendix
+### Kube-dns/Coredns
+Use 
+
+```sudo kubectl get pods --all-namespace```
+to check the coredns status. If it is CrashLoopBackoff, follow this
+[link](https://github.com/kubernetes/kubeadm/issues/998) to fix it.
+
