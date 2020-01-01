@@ -154,7 +154,8 @@ The web server is started as a pod.
         
             _NOTE_ because the api server is a map of the localhost, so this can be
             done as http://localhost:7000 as well.
-
+            ![curl_result](images/curl_result.png)
+            
 If everything works, this is what you will see:
 ![finalpoc](images/FinalPoc.png)
             
