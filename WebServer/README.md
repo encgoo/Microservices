@@ -12,9 +12,7 @@ It is serving at point 9000
 Use http://localhost:9000/emo_sen to access the web service.
 
 ## Build docker image
-Run
 
-```docker build -t sentiment-web .```
 On CentOS use:
 
 ```docker build --network=host -t sentiment-api .```
@@ -30,10 +28,11 @@ Use
 
 ```docker ps -a``` to check that sentiment-web is running
 
-Use http://localhost:9000/emo_sen to access the web service. Alse take note of the container id.
+Use http://localhost:9000/emo_sen to access the web service. Also take note of the container id.
 
 ### Stop
 Use
 
 ```docker stop _container_id``` to stop the container. You just need to type the first several chars 
 of the container id (enough to distinguish).
+

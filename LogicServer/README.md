@@ -4,7 +4,7 @@ This is a Flask server that do the following logic:
 * Given a sentence, compute its polarity
 * Given a polarity, find the closest emoji
 
-# Run as standalone
+## Run as standalone
 Run
 
 ```python3 sentiment.py```
@@ -12,29 +12,25 @@ Run
 ## Test
 Use the curl commands in this [folder](curl_test)
 
-# Docker
+## Run in a docker container
 
-## Build
-
-Use 
-
-```docker build -t sentiment-logc .```
-
-_Note_: In the [Dockerfile](Dockerfile), we install
-textblob, and also run a python command to download 
-textblob corpora.
+### Build a docker image
 
 On CentOS, use
 
 ```docker build --network=host -t sentiment-logic .```
 
-## Run
+_Note_: In the [Dockerfile](Dockerfile), we install
+textblob, and also run a python command to download 
+textblob corpora.
+
+### Run
 Run
 
 ```docker run -d -p 5050:5000 sentiment-logic```
 
-## Test
-Node that we mapped port 5000 of the container to port 5050
+### Test
+_Note_ that we mapped port 5000 of the container to port 5050
 now. So do curl as like in [curl_test](curl_test),
 but change the port to 5050. 
 

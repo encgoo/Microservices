@@ -32,13 +32,10 @@ These microservices were designed following the [Twelve-factor methodology](http
 
 ## Prerequites
 ### Minikube
-Minikube is used to create local Kubernetes cluster. This POC runs on Debian 9 VM. Refer to [Minikube](../Kubernetes/README.md) for
-instruction on installing minikube on Debian 9 VM. 
+Minikube is used to create local Kubernetes cluster. Follow this [link](https://vocon-it.com/2018/11/19/single-node-kubernetes-cluster-1-installing-minikube-on-centos/) to install
+minikube on CentOS 8. _Note_: Use minikube v0.30.0. The latest version of minikube is difficult to setup because of the swap issue.
 
-Or follow this [link](https://vocon-it.com/2018/11/19/single-node-kubernetes-cluster-1-installing-minikube-on-centos/) to install
-minikube on CentOS 8. _Note_: Use minikube v0.30.0. The latest one might not work.
-
-Run this to make sure everything is working first.
+Once installed, run this to make sure everything is working first.
 
 * Start minicube
 
@@ -52,16 +49,26 @@ Run this to make sure everything is working first.
 This is installed together with minikube above. 
 
 ### docker
+The minikube [link](https://vocon-it.com/2018/11/19/single-node-kubernetes-cluster-1-installing-minikube-on-centos/) includes
+the information for installing docker as well. Here docker-ce-18.06.1-ce is used. 
 
 ### python
-All the source codes are developed using python.
+All the source codes are developed using python 3. Also install Flask.
 
 ### socat
-For CentOS, you might need to install socat first
+For CentOS, you might need to install socat first for this POC to work.
 
 ```sudo yum install -y socat```
 
 ## Steps
+Before we can use these three microservices, first go the those following three folders to make
+sure each microservice can run as a standalone python app and inside a docker container.
+* [LogicServer](LogicServer)
+* [ApiServer](ApiServer)
+* [WebServer](WebServer)
+
+If everything works fine in those three folder, now use Kubernetes to manage those three services.
+
 These are the steps to use. Note here we are going to start the
 api server and logic server as deployments and then services.
 
@@ -96,7 +103,10 @@ The web server is started as a pod.
     
             to check. There shall be two pods
             ![screenshot](images/deployment_logic.png)
-    
+            The reason for two pods here is that in the [deployment yaml](api-server-deployment.yaml) file, 
+            we specified 2 replicas.
+            
+            ![deployment_file](images/deployment-yaml.png)    
         * Start up a service
     
             ```sudo kubectl apply -f logic-server-service.yaml```
@@ -117,6 +127,10 @@ The web server is started as a pod.
         * Start a deployment
         
             ```sudo kubectl apply -f api-server-deployment.yaml```
+            
+            _NOTE_: In the [deployment file](api-server-deployment.yaml), it shows how to 
+            use env var pass the information of the logic-server.
+            ![screenshot](images/api_deployment.png)
         
         * Check pods
         
