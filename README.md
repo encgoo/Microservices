@@ -1,4 +1,5 @@
 # Microservices
+This is a very simple NLP project to demonstrate Kubernetes and Microservices.
 
 This is a followup project of the [Kubernetes](../Kubernetes) POC. In the Kubernetes POC, Kubernetes (minikube), Docker,
 and Flask are used to build a (_single_) web/API service. In some sense, it is a [monolithic](https://articles.microservices.com/monolithic-vs-microservices-architecture-5c4848858f59) 
